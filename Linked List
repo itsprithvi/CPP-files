@@ -1,0 +1,210 @@
+#include<iostream>
+
+using namespace std;
+
+//Linked List Implementation in cpp
+
+//To Create Node for the Linked List
+class Node {
+public:
+    int data;
+    Node* next;
+};
+Node* head=NULL;
+
+//Insert At Beginning
+void insertAtBegin(int val) {
+    Node* newNode = new Node();
+    if(newNode==NULL) {
+        cout << "Out of Memory";
+        return;
+    }
+    newNode -> data= val;
+    if(head==NULL) {
+        newNode -> next = NULL;
+        head = newNode;
+    } else {
+        newNode -> next = head;
+        head = newNode;
+    }
+    cout << "Element " << val << " Placed At the Beginning of the Linked List !" << endl;
+    return;
+}
+
+//Display all Elements in Linked List
+void displayElements() {
+    //Edge case
+    if(head == NULL) cout << "Linked List is Empty " << endl;
+    Node* temp = head;
+    while(temp != NULL) {
+        cout << temp -> data << "\t";
+        temp = temp -> next;
+    }
+    cout << endl;
+}
+
+//Insert At Given Position
+void insertAtPos(int pos, int val) {
+    Node* newNode = new Node();
+    if(newNode==NULL) {
+        cout << "Memory is Full !" << endl;
+        return;
+    }
+    if(head==NULL) {
+        cout << "There is no such position" << endl;
+    }
+    newNode -> data = val;
+    Node* temp = head;
+    for(int i=1; i<=pos-1; i++) {
+        temp = temp -> next;
+        if(temp==NULL) {
+            cout << "There is no such Position " << endl;
+            return;
+        }
+    }
+    newNode -> next = temp -> next;
+    temp -> next = newNode;
+}
+
+//Delete At Position
+void deleteAtPos(int pos) {
+    Node* temp = head;
+    Node* prev;
+    if(head==NULL) {
+        cout << "List is Empty !" << endl;
+        return;
+    }
+    if(pos==0) {
+    head = head -> next;
+    free(temp);
+    cout << "Element is Inserted " << endl;
+    return;
+    }
+    for(int i=1; i<=pos; i++) {
+        prev = temp;
+        temp = temp -> next;
+        if(temp==NULL) {
+            cout << "There is no such Position";
+        }
+    }
+    prev -> next = temp -> next;
+    cout << "Deleted " << temp -> data << endl;
+    free(temp);
+
+}
+
+//Append element at last
+void insertAtLast(int val) {
+    Node* newNode = new Node();
+    if(head==NULL) {
+        insertAtBegin(val);
+        return;
+    }
+
+    Node* temp = head;
+    while(temp->next != NULL) {
+        temp = temp -> next;
+    }
+    newNode -> data = val;
+    temp -> next = newNode;
+    newNode -> next = NULL;
+    cout << "Inserted At Last" << endl;
+}
+
+//Search the Element
+void searchElement(int val) {
+    if(head==NULL) {
+        cout << "List does not exist" << endl;
+        return;
+    }
+    Node* temp = head;
+    while(temp != NULL) {
+        if(temp->data==val) {
+            cout << "Element is found !" << endl;
+            return;
+        }
+        temp = temp -> next;
+    }
+    cout << "Element is not found :( " << endl;
+}
+
+//Count All Elements
+void countElement() {
+    if(head==NULL) {
+        cout << "List is Empty" << endl;
+        return;
+    }
+    Node* temp = head;
+    int c=1;
+    while(temp->next != NULL) {
+        c++;
+        temp = temp->next;
+    }
+    cout << "Total no of element are in the list : " << c << endl;
+}
+
+//Function starts here
+int main() {
+    int choice, val, pos;
+    bool flag=true;
+    while(flag) {
+    cout << "-------------Linked List Menu------------" << endl;
+    cout <<"1.Insert At Beginning" << endl;
+    cout <<"2.Display Elements" << endl;
+    cout <<"3.Insert At Given Position" << endl;
+    cout <<"4.Delete The Element at Position" << endl;
+    cout <<"5.Insert At Last Position" <<endl;
+    cout <<"6.Search the element1" << endl;
+    cout <<"7.Count" << endl;
+    cout <<"8.Exit" << endl;
+    cout <<"-----------------------------------------" << endl;
+
+    cin >> choice;
+
+    switch(choice) {
+    case 1:
+        cout << "Enter the Number to insert at beginning  :  ";
+        cin >> val;
+        insertAtBegin(val);
+        break;
+    case 2:
+        cout << "Elements are in the Linked List " << endl;
+        displayElements();
+        break;
+    case 3:
+        cout << "Enter position and value to insert  :  " << endl;
+        cin >> pos >> val;
+        if(pos==0)
+            insertAtBegin(val);
+        else
+            insertAtPos(pos, val);
+        break;
+    case 4:
+        cout << "Enter position and value to delete  :  " << endl;
+        cin >> pos;
+        deleteAtPos(pos);
+        break;
+    case 5:
+        cout << "Enter the Element to append  :  " << endl;
+        cin >> val;
+        insertAtLast(val);
+        break;
+    case 6:
+        cout << "Enter the element to search : " << endl;
+        cin >> val;
+        searchElement(val);
+        break;
+    case 7:
+        countElement();
+        break;
+    case 8:
+        flag=false;
+        break;
+
+    default:
+        cout << "Entered the wrong option ! ";
+    }
+}
+
+
+}
