@@ -34,6 +34,11 @@ void InsertAtBegin(int value) {
 void InsertAtPos(int pos, int value) {
    Node* newNode = new Node(value);
    Node* temp = head;
+   if(pos==0) {
+       newNode->next=head;
+       head=newNode;
+       return;
+   }
    for(int i=1;i<=pos-1;i++){
         temp = temp -> next;
         if(temp==nullptr){
